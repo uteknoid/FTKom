@@ -121,7 +121,7 @@ foreach ($tema as $t) {
 
   </div>
   <div class="modal-footer">
-    <input type="submit" style="float: right;" class="btn btn-primary" value="Tambah">
+    <input type="submit" style="float: right;" class="btn btn-primary" value="Simpan">
   </div>
 </form>
 

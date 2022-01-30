@@ -88,7 +88,7 @@ class Admin extends CI_Controller
             $data['title'] = 'Data Login Mahasiswa | Admin';
 
             $this->load->view('admin/include/header', $data);
-            $this->load->view('admin//data-login/data-login');
+            $this->load->view('admin/data-login/data-login');
             $this->load->view('admin/include/footer');
 
         }else {
@@ -266,6 +266,25 @@ class Admin extends CI_Controller
             ];
 
             $this->db->insert('tbl_mahasiswa', $data);
+
+
+            $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            $password = array(); 
+            $alpha_length = strlen($alphabet) - 1; 
+            for ($i = 0; $i < 10; $i++) 
+            {
+                $n = rand(0, $alpha_length);
+                $password[] = $alphabet[$n];
+            }
+            $ranpass = implode($password);
+
+            $data_login = [
+
+                'nim' => $this->input->post('nim', true),
+                'password' => $ranpass
+            ];
+
+            $this->db->insert('data_login', $data_login);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data Induk Mahasiswa Berhasil Ditambahkan!</div>');
             redirect('admin/data_induk');
         }
@@ -525,7 +544,32 @@ class Admin extends CI_Controller
 
     //Data Tema======================================================
 
-    public function data_tema()
+    public function data_tema_baru()
+    {
+        $data['admin'] = $this->db->get_where('admin', ['username' =>
+            $this->session->userdata('username')])->row_array();
+        if (isset($data['admin']['username']) == true) {
+
+            $data['maktif'] = 'tema';
+
+
+            $where = array( 
+                'dospem1' => '',
+                'dospem2' => '',
+                'status' => '0'
+            );
+
+            $data['data'] = $this->data_models->edit($where, 'tbl_tema')->result();
+
+            $this->load->view('admin/include/header', $data);
+            $this->load->view('admin/tema/tema', $data);
+            $this->load->view('admin/include/footer');
+        } else {
+            redirect('admin/login');
+        }
+    }
+
+    public function data_tema_acc()
     {
         $data['admin'] = $this->db->get_where('admin', ['username' =>
             $this->session->userdata('username')])->row_array();
@@ -534,8 +578,13 @@ class Admin extends CI_Controller
             $data['maktif'] = 'tema';
             $data['title'] = 'Kelola Sejarah | Admin';
 
+            $where = array( 
+                'dospem1 !=' => '',
+                'dospem2 !=' => '',
+                'status' => '1'
+            );
 
-            $data['data'] = $this->data_models->data('tbl_tema')->result();
+            $data['data'] = $this->data_models->edit($where, 'tbl_tema')->result();
 
             $this->load->view('admin/include/header', $data);
             $this->load->view('admin/tema/tema', $data);
@@ -604,12 +653,13 @@ class Admin extends CI_Controller
                 'ttd' => $ttd,
                 'masalah' => $this->input->post('masalah', true),
                 'solusi' => $this->input->post('usulan', true),
-                'software' => $this->input->post('software', true)
+                'software' => $this->input->post('software', true),
+                'status' => '0'
             ];
 
             $this->db->insert('tbl_tema', $data);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Tema Berhasil Diajukan!</div>');
-            redirect('admin/data_tema');
+            redirect('admin/data_tema_baru');
         }
     }
 
@@ -619,7 +669,7 @@ class Admin extends CI_Controller
             $this->session->userdata('username')])->row_array();
         if (isset($data['admin']['username']) == true) {
 
-            $data['maktif'] = 'induk';
+            $data['maktif'] = 'tema';
 
             $where = array( 
                 'nim' => $nim
@@ -680,7 +730,7 @@ class Admin extends CI_Controller
 
             $this->data_models->update($where, $data, 'tbl_tema');
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data Pengajuan Tema Berhasil Diperbaharui</div>');
-            redirect('admin/data_tema');
+            redirect('admin/data_tema_baru');
         } else {
 
             $ttd = $this->upload->data();
@@ -707,7 +757,7 @@ class Admin extends CI_Controller
 
             $this->data_models->update($where, $data, 'tbl_tema');
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data Pengajuan Tema Berhasil Diperbaharui</div>');
-            redirect('admin/data_tema');
+            redirect('admin/data_tema_baru');
         }
 
     }
@@ -721,7 +771,7 @@ class Admin extends CI_Controller
 
         $this->data_models->hapus($where, 'tbl_tema');
         $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Data Berhasil Dihapus</div>');
-        redirect('admin/data_tema');
+        redirect('admin/data_tema_baru');
 
     }
 
@@ -744,7 +794,8 @@ class Admin extends CI_Controller
 
         $data = array(
             'dospem1' => $this->input->post('dospem1', true),
-            'dospem2' => $this->input->post('dospem2', true)
+            'dospem2' => $this->input->post('dospem2', true),
+            'status' => '1'
         );
 
         $where = array(
@@ -753,7 +804,7 @@ class Admin extends CI_Controller
 
         $this->data_models->update($where, $data, 'tbl_tema');
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Pengajuan Tema Berhasil Disetujui</div>');
-        redirect('admin/data_tema');
+        redirect('admin/data_tema_acc');
 
     }
 
@@ -763,7 +814,8 @@ class Admin extends CI_Controller
 
         $data = array(
             'dospem1' => '',
-            'dospem2' => ''
+            'dospem2' => '',
+            'status' => '0'
         );
 
         $where = array(
@@ -772,7 +824,7 @@ class Admin extends CI_Controller
 
         $this->data_models->update($where, $data, 'tbl_tema');
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Persetujuan Tema Berhasil Dibatalkan</div>');
-        redirect('admin/data_tema');
+        redirect('admin/data_tema_baru');
 
     }
 

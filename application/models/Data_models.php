@@ -7,10 +7,11 @@ class Data_models extends CI_Model
         return $this->db->get($db);
     }
 
-    function datalimit($db, $limit, $start)
+    function datalimit($table, $limit, $order, $where)
     {
-        $query = $this->db->get($db, $limit, $start);
-        return $query;
+        $this->db->order_by($order, 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get_where($table, $where);
     }
 
 

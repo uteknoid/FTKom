@@ -64,7 +64,7 @@ $query = $this->db->query("SELECT * FROM tbl_mahasiswa WHERE nim NOT IN (SELECT 
 
   </div>
   <div class="modal-footer">
-    <input type="submit" style="float: right;" class="btn btn-primary" value="Tambah">
+    <input type="submit" style="float: right;" class="btn btn-primary" value="Simpan">
   </div>
 </form>
 

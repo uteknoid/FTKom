@@ -54,11 +54,14 @@
                     <?php if ($d->dospem1 != '' && $d->dospem2 != ''){ ?>
                       <a style="width: 4rem;" href="<?php echo base_url('admin/batal_setujui_tema/').$d->nim; ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('Yakin ingin membatalkan pengajuan data tema ini?');"> Batal Setujui </a>
                     <?php }else{ ?>
-                      <a style="width: 4rem;" href="javascript:void(0);" data-toggle="modal" data-target="#setujuiModal<?php echo $d->nim; ?>" class="btn btn-sm btn-success mb-2"> Setujui </a>
+                      <a style="width: 4rem;" href="<?php echo base_url('admin/batal_setujui_tema/').$d->nim; ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('Yakin ingin membatalkan pengajuan data tema ini?');"> Tolak </a>
                     <?php } ?>
                     <br>
                     <a style="width: 4rem;" href="<?php echo base_url('admin/edit_tema/').$d->nim; ?>" class="btn btn-sm btn-warning mb-2"> Edit </a>
                     <a style="width: 4rem;" href="<?php echo base_url('admin/hapus_tema/').$d->nim; ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('Yakin ingin menghapus data ini?');"> Hapus </a>
+                    <?php if ($d->dospem1 == '' && $d->dospem2 == ''){ ?>
+                      <br><a style="width: 8.3rem;" href="javascript:void(0);" data-toggle="modal" data-target="#setujuiModal<?php echo $d->nim; ?>" class="btn btn-sm btn-success mb-2"> Setujui </a>
+                    <?php } ?>
                   </td>
                 </tr>
 

@@ -21,7 +21,7 @@
 <!---Container Fluid-->
 
 <?php 
-$query = $this->db->query("SELECT * FROM tbl_mahasiswa ORDER BY nim DESC")->result();
+$query = $this->db->query("SELECT * FROM tbl_mahasiswa WHERE nim NOT IN (SELECT nim from tbl_tema)  ORDER BY tbl_mahasiswa.nim DESC")->result();
 
 ?>
 <form class="user" method="post" action="<?= base_url('admin/tambah_tema'); ?>" enctype="multipart/form-data">
@@ -44,8 +44,8 @@ $query = $this->db->query("SELECT * FROM tbl_mahasiswa ORDER BY nim DESC")->resu
       <label>Status Mahasiswa</label>
       <select name="status_mhs" class="form-control form-control-user"required>
         <option value="">Pilih Status..</option>
-          <option value="Reguler">Reguler</option>
-          <option value="Konversi">Konversi</option>
+        <option value="Reguler">Reguler</option>
+        <option value="Konversi">Konversi</option>
       </select>
     </div>
 
@@ -53,11 +53,11 @@ $query = $this->db->query("SELECT * FROM tbl_mahasiswa ORDER BY nim DESC")->resu
       <label>Konsentrasi Bidang</label>
       <select name="konsentrasi" class="form-control form-control-user"required>
         <option value="">Pilih Konsentrasi..</option>
-          <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
-          <option value="Jaringan Komputer">Jaringan Komputer</option>
-          <option value="Sistem Informasi Geografis">Sistem Informasi Geografis</option>
-          <option value="Multimedia">Multimedia</option>
-          <option value="Desain Web">Desain Web</option>
+        <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+        <option value="Jaringan Komputer">Jaringan Komputer</option>
+        <option value="Sistem Informasi Geografis">Sistem Informasi Geografis</option>
+        <option value="Multimedia">Multimedia</option>
+        <option value="Desain Web">Desain Web</option>
       </select>
     </div>
 

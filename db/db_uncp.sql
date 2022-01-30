@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2022 at 12:56 AM
+-- Generation Time: Jan 30, 2022 at 05:29 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -52,14 +52,6 @@ CREATE TABLE `data_login` (
   `last_login` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `data_login`
---
-
-INSERT INTO `data_login` (`nim`, `password`, `last_login`) VALUES
-(1704411398, '15NEKC', NULL),
-(1704411397, 'PBT4Q7', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -107,13 +99,6 @@ CREATE TABLE `tbl_mahasiswa` (
   `foto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_mahasiswa`
---
-
-INSERT INTO `tbl_mahasiswa` (`nim`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `nama_ayah`, `nama_ibu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `pekerjaan_mhs`, `alamat_ayah`, `alamat_ibu`, `prov_mhs`, `kab_mhs`, `kec_mhs`, `kel_mhs`, `alamat_mhs`, `kontak_ayah`, `kontak_ibu`, `kontak_mhs`, `email`, `pendidikan`, `prodi`, `tahun_masuk`, `foto`) VALUES
-('1704411398', 'Muh. Rafli Fadillah Ramadhani', 'Laki-Laki', 'Lamasi', '1999-12-28', 'Islam', 'Masdar', 'Supriatin', 'Wiraswasta', '', '', 'Pongsamelung', 'Pongsamelung', 'Sulawesi Selatan', 'Kabupaten Luwu', 'Lamasi', 'Pongsamelung', 'Jalan Merdeka No. 51 RT 001/RW. 001', '081355020244', '', '085298999288', 'muhrafli55@gmail.com', 'Strata Satu (S1)', 'Informatika', '2017-12-07', 'Rafli2.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -132,7 +117,8 @@ CREATE TABLE `tbl_tema` (
   `ttd` varchar(255) NOT NULL,
   `masalah` text NOT NULL,
   `solusi` text NOT NULL,
-  `software` text NOT NULL
+  `software` text NOT NULL,
+  `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
